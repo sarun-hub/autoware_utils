@@ -417,6 +417,18 @@ T transform_vector(const T & points, const geometry_msgs::msg::Transform & trans
   return transformed;
 }
 
+template <class PointType>
+boost::geometry::model::polygon<PointType> transform_polygon(
+  const boost::geometry::model::polygon<PointType> polygon,
+  const geometry_msgs::msg::Transform & transform)
+{
+  boost::geometry::model::polygon<PointType> transformed;
+  for (const auto & point : polygon.outer()) {
+    transformed.outer().push_back(transform_point(point, transform));
+  }
+  return transformed;
+}
+
 geometry_msgs::msg::Pose transform_pose(
   const geometry_msgs::msg::Pose & pose, const geometry_msgs::msg::TransformStamped & transform);
 
